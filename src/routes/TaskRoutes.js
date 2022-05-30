@@ -19,6 +19,7 @@ router.post('/', TaskValidation, TaskController.create)
 router.put('/:id', TaskValidation, TaskController.update)
 router.get('/:macaddress', TaskController.all)
 router.get('/:macaddress/:id', TaskController.show)
+router.delete('/:id', TaskController.delete)
 
 
 module.exports = router
