@@ -30,7 +30,19 @@ class TaskController{
                     .catch(error => {
                         return res.status(500).json(error)
                     })
+    }
 
+    async all(req, res){
+        await TaskModel.find({
+                                macaddress: {'$in': req.params.macaddress}
+                            })
+                        .sort('when')
+                        .then(response => {
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => {
+                            return res.status(500).json(error)
+                        })
     }
 }
 
