@@ -1,6 +1,10 @@
 // Importando o model
 const TaskModel = require('../model/TaskModel')
 
+// Pegando a data e hora atual
+const current = new Date()
+
+
 // Classe TaskController
 class TaskController{
     // Métodos da classe
@@ -75,6 +79,21 @@ class TaskController{
                                         {'done': req.params.done},
                                         {new: true}
                                     )
+                        .then(response => {
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => {
+                            return res.status(500).json(error)
+                        })
+    }
+
+    async late(req, res){
+                            // Busque todos os registro que a data (when) são menores que current
+        await TaskModel.find({
+                                'when': {'$lt': current},
+                                'macaddress': {'$in': req.params.macaddress}
+                        })
+                        .sort('when')
                         .then(response => {
                             return res.status(200).json(response)
                         })

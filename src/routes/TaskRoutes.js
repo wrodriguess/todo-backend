@@ -17,10 +17,12 @@ const TaskValidation = require('../middlewares/TaskValidation')
 // Antes de chamadar TaskController.create a requisição irá passar por TaskValidation
 router.post('/', TaskValidation, TaskController.create)
 router.put('/:id', TaskValidation, TaskController.update)
-router.get('/:macaddress', TaskController.all)
 router.get('/:macaddress/:id', TaskController.show)
 router.delete('/:id', TaskController.delete)
 router.put('/:id/:done', TaskController.done)
+
+router.get('/filter/all/:macaddress', TaskController.all)
+router.get('/filter/late/:macaddress', TaskController.late)
 
 
 module.exports = router
