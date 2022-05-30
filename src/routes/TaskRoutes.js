@@ -20,6 +20,7 @@ router.put('/:id', TaskValidation, TaskController.update)
 router.get('/:macaddress', TaskController.all)
 router.get('/:macaddress/:id', TaskController.show)
 router.delete('/:id', TaskController.delete)
+router.put('/:id/:done', TaskController.done)
 
 
 module.exports = router
