@@ -16,6 +16,22 @@ class TaskController{
                     return res.status(500).json(error)
                 })
     }
+
+    async update(req, res){
+        // findByIdAndUpdate
+        // 1º Parametro: Qual registro será alterado
+        // 2º Parametro: Novos valores do registro
+        // 3º Parametro: Ira trazer na resposta o registro atualizado, caso contrário irá atualiza, mas a resposta exibirá os valores antigos
+        await TaskModel
+                    .findByIdAndUpdate({'_id': req.params.id}, req.body, {new: true})
+                    .then(response => {
+                        return res.status(200).json(response)
+                    })
+                    .catch(error => {
+                        return res.status(500).json(error)
+                    })
+
+    }
 }
 
 // Instanciando TaskController e exportando o mesmo

@@ -22,7 +22,22 @@ async function TaskValidation(req, res, next){
     }else{
         // Verificando se já existe uma tarefa no mesmo dia e hora para esse macaddress
         let exists
-        exists = await TaskModel.findOne({'when': {'$eq': new Date(when)}, 'macaddress': {'$in': macaddress}})
+
+        // Verificando se foi passado id no req.params 
+        // Caso exista se trata de um update e pode ser no mesmo dia e horário
+        if(req.params.id){
+            exists = await TaskModel.findOne({
+                                                // Verifica se o ID não é igual ao passado (Irá ignorar caso a única tarefa encontrada seja a do mesmo id e exists receberá false)
+                                                '_id': {'$ne': req.params.id}, 
+                                                'when': {'$eq': new Date(when)}, 
+                                                'macaddress': {'$in': macaddress}
+                                            })
+        }else{
+            exists = await TaskModel.findOne({
+                                                'when': {'$eq': new Date(when)}, 
+                                                'macaddress': {'$in': macaddress}
+                                            })
+        }
 
         if(exists){
             return res.status(400).send({error: 'Já existe uma tarefa nesse dia e hora'})

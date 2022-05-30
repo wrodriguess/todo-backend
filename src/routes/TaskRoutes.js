@@ -16,6 +16,7 @@ const TaskValidation = require('../middlewares/TaskValidation')
 // 2º Parametro: Método que será chamado
 // Antes de chamadar TaskController.create a requisição irá passar por TaskValidation
 router.post('/', TaskValidation, TaskController.create)
+router.put('/:id', TaskValidation, TaskController.update)
 
 
 module.exports = router
