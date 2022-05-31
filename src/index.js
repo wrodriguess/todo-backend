@@ -1,11 +1,17 @@
 // Importando o express
 const express = require('express')
 
+// Importando o CORS
+const cors = require('cors')
+
 // Inicializando o servidor (express() -> Express inicializado)
 const server = express()
 
 // Permite que o servidor/API receba e envie informações do formato JSON
 server.use(express.json())
+
+// Utilizando o CORS no servidor
+server.use(cors())
 
 // Importando as rotas
 const TaskRoutes = require('./routes/TaskRoutes')
