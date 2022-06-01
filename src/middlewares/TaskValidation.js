@@ -17,8 +17,6 @@ async function TaskValidation(req, res, next){
         return res.status(400).send({error: 'Descrição é obrigatório'})
     }else if(!when){
         return res.status(400).send({error: 'Data e hora são obrigatórios'})
-    }else if(isPast(new Date(when))){
-        return res.status(400).send({error: 'Escolha uma data e hora futura'})
     }else{
         // Verificando se já existe uma tarefa no mesmo dia e hora para esse macaddress
         let exists
@@ -33,6 +31,11 @@ async function TaskValidation(req, res, next){
                                                 'macaddress': {'$in': macaddress}
                                             })
         }else{
+            // Caso seja uma nova tarefa irá verificar se a data e hora é futura
+            if(isPast(new Date(when))){
+                return res.status(400).send({error: 'Escolha uma data e hora futura'})
+            }
+
             exists = await TaskModel.findOne({
                                                 'when': {'$eq': new Date(when)}, 
                                                 'macaddress': {'$in': macaddress}
